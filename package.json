@@ -1,0 +1,6 @@
+{
+  "name": "lp-data-warehouse-prod",
+  "dependencies": {
+    "@dataform/core": "2.0.1"
+  }
+}

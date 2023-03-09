@@ -1,0 +1,13 @@
+{
+    "warehouse": "bigquery",
+    "defaultSchema": "dataform",
+    "assertionSchema": "DWHASSERTION",
+    "defaultDatabase": "lp-data-warehouse-dev",
+    "defaultLocation": "EU",
+    "vars": {
+      "partitions": "{\"streams\":{\"ANG\":\"2023-02-14T05:09:58\",\"CST\":\"2023-01-20T06:58:39\",\"SAL\":\"2023-02-08T05:33:02\",\"DAT_ordiniEcommerce\":\"2023-02-13T15:30:03\",\"DAT_ordiniEcommerceCN\":\"2023-02-09T12:05:11\",\"DAT_KPI_QUALITA\":\"2023-01-30 17:29:56\"},\"tables\":{\"TEDDA_MARA_ANG\":\"2023-02-08T02:48:28\",\"TDWD4_ARTICOLI_ANG_MAN\":\"2023-02-08T02:48:28\",\"TDWDB_CAMBI_GG_ANG\":\"2023-02-14T05:09:58\",\"TEDDB_MAKT_ANG\":\"2023-02-08T02:48:28\",\"ZINT_MD_SEGM_ANG\":\"2023-02-08T02:48:28\",\"PIMM_ANG\":\"2023-01-31T12:52:56\",\"SERIAL_VISIBILITY_ANG\":\"2023-02-06T02:34:49\",\"GETAB00F_ANG\":\"2023-02-06T05:04:28\"}}",
+      "dataComp": "2023",
+      "area": "ALL",
+      "dataKpiQualita": "2022-12"
+    }
+}
