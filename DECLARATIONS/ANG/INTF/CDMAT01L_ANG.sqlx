@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHINTF",
+  name: "CDMAT01L_ANG"
+}

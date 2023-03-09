@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHDM",
+  name: "TDWAF_PERIODI_ANALISI_ANG"
+}

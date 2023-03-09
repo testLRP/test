@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHDM",
+  name: "TDWDC_ARTICOLI_COLORE_ANG"
+}

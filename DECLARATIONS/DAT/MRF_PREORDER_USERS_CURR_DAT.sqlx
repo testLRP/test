@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHINTF",
+  name: "MRF_PREORDER_USERS_CURR_DAT"
+}

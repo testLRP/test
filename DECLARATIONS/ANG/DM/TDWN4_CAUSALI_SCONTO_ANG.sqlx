@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHDM",
+  name: "TDWN4_CAUSALI_SCONTO_ANG"
+}

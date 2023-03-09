@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHEDW",
+  name: "TEDDA_MARA_ANG"
+}

@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHINTF",
+  name: "DAM_ARTICOLI_ANG"
+}

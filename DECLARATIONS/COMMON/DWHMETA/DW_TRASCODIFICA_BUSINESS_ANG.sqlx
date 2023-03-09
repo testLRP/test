@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHMETA",
+  name: "DW_TRASCODIFICA_BUSINESS_ANG"
+}

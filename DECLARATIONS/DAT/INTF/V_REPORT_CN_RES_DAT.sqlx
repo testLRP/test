@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHINTF",
+  name: "V_REPORT_CN_RES_DAT"
+}

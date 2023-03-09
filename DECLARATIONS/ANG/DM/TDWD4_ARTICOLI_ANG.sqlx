@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHDM",
+  name: "TDWD4_ARTICOLI_ANG"
+}

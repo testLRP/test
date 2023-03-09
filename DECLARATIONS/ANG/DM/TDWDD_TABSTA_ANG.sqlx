@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHDM",
+  name: "TDWDD_TABSTA_ANG"
+}

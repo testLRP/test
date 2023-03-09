@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHDM",
+  name: "TDWN8_LISTINO_STD_FULL_ANG"
+}

@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHMETA",
+  name: "PARAMETRI_FLUSSO_DAT"
+}

@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHDM",
+  name: "TDWNA_LISTINO_RETAIL_ANG"
+}

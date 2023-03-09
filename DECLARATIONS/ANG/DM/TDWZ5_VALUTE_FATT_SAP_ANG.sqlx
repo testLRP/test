@@ -1,0 +1,5 @@
+config {
+  type: "declaration",
+  schema: "DWHDM",
+  name: "TDWZ5_VALUTE_FATT_SAP_ANG"
+}
