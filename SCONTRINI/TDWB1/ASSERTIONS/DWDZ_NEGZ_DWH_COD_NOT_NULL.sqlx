@@ -1,0 +1,25 @@
+-- config {
+--   type: "assertion",
+--   tags: ["scontrini"]
+-- }
+
+-- SELECT
+--   DWB1_ID_SCN_COD,
+--   FAILING_ROW_CONDITION,
+--   NUMERO_ERRORI
+-- FROM
+--   (
+--     SELECT
+--       'DWDZ_NEGZ_DWH_COD IS NOT NULL' AS FAILING_ROW_CONDITION,
+--       COUNT(DWB1_ID_SCN_COD) OVER (partition by DWB1_ID_SCN_COD) as NUMERO_ERRORI,
+--       DWB1_ID_SCN_COD
+--     FROM
+--       ${ref("TDWB1_TRANS_FULL_SAL")}
+--     WHERE
+--       NOT (DWDZ_NEGZ_DWH_COD IS NOT NULL)
+--   )
+-- WHERE
+--   (NUMERO_ERRORI / ( SELECT
+--     COUNT(*)
+--   FROM
+--     ${ref("TDWB1_TRANS_FULL_SAL")})) * 100 > 5

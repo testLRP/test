@@ -1,0 +1,26 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_ARTICOLI_DETT",
+  tags: ["scontrini"],
+  description:"Questa ricava l'articolo cod assieme alle colonne che ne indicano i dettagli",
+  columns: {
+    DWD4_ARTICOLO_COD:"",
+    DWD4_UDM_COD:"",
+    DWM3_CLASSE_COD:"",
+    DWM6_GENERE_COD:"",
+    DWMB_SU_MISURA_COD:""
+  }
+
+}
+
+SELECT
+  DWD4_ARTICOLO_COD,
+  DWM3_CLASSE_COD,
+  DWM6_GENERE_COD,
+  DWD4_UDM_COD,
+  DWMB_SU_MISURA_COD
+FROM
+  ${ref("TDWD4_ARTICOLI_ANG")} TDWD4
+  inner JOIN ${ref("TLDB1_INPUT")} ON TDWD4.DWD4_ARTICOLO_COD = ARTICOLO_COD
+

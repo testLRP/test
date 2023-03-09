@@ -1,0 +1,36 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_TIPO_SCN_BASE",
+  tags: ["scontrini"],
+  description:"",
+  columns: {
+    ID_SCN:"",
+    TIPO_SCN:""
+  }
+}
+
+SELECT
+  ID_SCN,
+  TIPO_SCN
+FROM(
+    SELECT
+      ID_SCN,
+      CASE
+        N_RIGHE
+        WHEN 1 THEN 'SB' || CAU
+        ELSE NULL
+      END AS TIPO_SCN,
+    FROM(
+        SELECT
+          ID_SCN,
+          COUNT(DISTINCT CAU_RSO_RGH_COD) AS N_RIGHE,
+          MAX(CAU_RSO_RGH_COD) AS CAU,
+        FROM
+          ${ref("TLDB1_INPUT")}
+        GROUP BY
+          ID_SCN
+      )
+  )
+WHERE
+  TIPO_SCN IS NOT NULL

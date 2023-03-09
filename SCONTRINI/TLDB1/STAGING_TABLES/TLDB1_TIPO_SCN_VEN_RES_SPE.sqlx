@@ -1,0 +1,77 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_TIPO_SCN_VEN_RES_SPE",
+  tags: ["scontrini"],
+  description: "",
+  columns: {
+    ID_SCN: "",
+    TIPO_SCN: ""
+  }
+}
+
+SELECT
+  ID_SCN,
+  TIPO_SCN
+FROM(
+    SELECT
+      ID_SCN,
+      CASE
+        WHEN SUM(
+          CASE
+            CAU_RSO_RGH_COD
+            WHEN 'VEN' THEN 1
+            ELSE 0
+          END
+        ) > 0
+        AND SUM(
+          CASE
+            CAU_RSO_RGH_COD
+            WHEN 'RES' THEN 1
+            ELSE 0
+          END
+        ) = 0 THEN 'SBVEN'
+        WHEN SUM(
+          CASE
+            CAU_RSO_RGH_COD
+            WHEN 'VEN' THEN 1
+            ELSE 0
+          END
+        ) = 0
+        AND SUM(
+          CASE
+            CAU_RSO_RGH_COD
+            WHEN 'RES' THEN 1
+            ELSE 0
+          END
+        ) > 0 THEN 'SBRES'
+        WHEN SUM(
+          CASE
+            CAU_RSO_RGH_COD
+            WHEN 'VEN' THEN 1
+            ELSE 0
+          END
+        ) = 0
+        AND SUM(
+          CASE
+            CAU_RSO_RGH_COD
+            WHEN 'RES' THEN 1
+            ELSE 0
+          END
+        ) = 0
+        AND SUM(
+          CASE
+            CAU_RSO_RGH_COD
+            WHEN 'SPE' THEN 1
+            ELSE 0
+          END
+        ) > 0 THEN 'SBSPE'
+        ELSE NULL
+      END AS TIPO_SCN
+    FROM
+      ${ref("TLDB1_INPUT")}
+    GROUP BY
+      ID_SCN
+  )
+WHERE
+  TIPO_SCN IS NOT NULL

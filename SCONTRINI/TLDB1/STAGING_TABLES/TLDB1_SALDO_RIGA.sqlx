@@ -1,0 +1,42 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_SALDO_RIGA",
+  tags: ["scontrini"],
+  description: "",
+  columns: {
+    DWN4_SCONTO_LP_FLG:"",
+    KONV_KNUMV:"",
+    KONV_KPOSN:"",
+    KONV_KSCHL:""
+  }
+}
+
+SELECT
+  KONV_KNUMV,
+  KONV_KPOSN,
+  KONV_KSCHL,
+  DWN4_SCONTO_LP_FLG
+FROM(
+    SELECT
+      KONV_KNUMV,
+      KONV_KPOSN,
+      KONV_KSCHL,
+      DWN4_SCONTO_LP_FLG,
+      ROW_NUMBER() OVER(
+        PARTITION BY KONV_KNUMV,
+        KONV_KPOSN
+        ORDER BY
+          DWN4_PRIORITA_COD
+      ) ROW_NUMBER
+    FROM
+      ${PARTITION.ref(ref("KONV_SAL"), "SAL")} KONV_SAL,
+      ${PARTITION.ref(ref("TDWN4_CAUSALI_SCONTO_ANG"), "ANG")}
+    WHERE
+      KONV_KSCHL = DWN4_CAU_SCONTO_COD
+      AND DWN4_SORGENTE_COD = 'SAP'
+      AND DWN4_CAU_SCONTO_OTB_COD = 'SALDO'
+      AND DWN4_TIPO_SCONTO_COD = 'RIGA'
+  )
+WHERE
+  ROW_NUMBER = 1

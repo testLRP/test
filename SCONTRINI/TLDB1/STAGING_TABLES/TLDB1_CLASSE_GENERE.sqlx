@@ -1,0 +1,39 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_CLASSE_GENERE",
+  tags: ["scontrini"],
+  description:"",
+  columns: {
+    DWM3_CLASSE_COD:"",
+    DWM6_GENERE_COD:"",
+    ID_RGH:"Numero di riga",
+    ID_SCN:"Codice identificativo dello scontrino"
+  }
+}
+
+SELECT
+  ID_SCN,
+  ID_RGH,
+  CASE
+    WHEN ARTICOLI_DETT_LKUP.DWM3_CLASSE_COD IS NULL then 'nd'
+    else DWM3_CLASSE_COD
+  END DWM3_CLASSE_COD,
+  CASE
+    WHEN ARTICOLI_DETT_LKUP.DWM6_GENERE_COD IS NULL then '-'
+    else DWM6_GENERE_COD
+  END DWM6_GENERE_COD
+FROM
+  ${ref("TLDB1_INPUT")}
+  LEFT JOIN (
+    SELECT
+      *,
+      row_number() over (
+        partition by DWD4_ARTICOLO_COD
+        order by
+          DWD4_ARTICOLO_COD
+      ) as ROW_NUMBER
+    FROM
+      ${ref("TLDB1_ARTICOLI_DETT")}
+  ) ARTICOLI_DETT_LKUP ON DWD4_ARTICOLO_COD = ARTICOLO_COD
+  and ARTICOLI_DETT_LKUP.ROW_NUMBER = 1

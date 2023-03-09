@@ -1,0 +1,10 @@
+config {
+  type: "view",
+  schema: "DWHVIEWS",
+  name: "TECHNOLOGY",
+  tags: ["views"]
+}
+
+SELECT DWX2_TECHNOLOGY_COD AS COD_TECHNOLOGY,   
+    DWX2_TECHNOLOGY_DES AS DES_TECHNOLOGY
+FROM  ${ref("TDWX2_TECHNOLOGY_ANG")}  X2

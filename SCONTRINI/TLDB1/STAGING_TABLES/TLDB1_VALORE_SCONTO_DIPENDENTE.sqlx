@@ -1,0 +1,22 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_VALORE_SCONTO_DIPENDENTE",
+  tags: ["scontrini"],
+  description:"",
+  columns: {
+    KONV_KNUMV:"",
+    KONV_KPOSN:"",
+    SCONTO_RGH_LOC_VAL:""
+  }
+}
+
+SELECT   KONV_KNUMV,
+         KONV_KPOSN,
+         ABS(SUM(CASE WHEN DWN4_SCONTO_LP_FLG="1" THEN KONV_KWERT ELSE 0 END)) SCONTO_RGH_LOC_VAL
+FROM     ${PARTITION.ref(ref("KONV_SAL"), "SAL")} KONV_SAL,
+         ${PARTITION.ref(ref("TDWN4_CAUSALI_SCONTO_ANG"), "ANG")}
+WHERE    KONV_KSCHL=DWN4_CAU_SCONTO_COD
+AND      DWN4_SORGENTE_COD = 'SAP'
+AND      DWN4_DIPENDENTE_FLG="1"
+GROUP BY KONV_KNUMV,KONV_KPOSN

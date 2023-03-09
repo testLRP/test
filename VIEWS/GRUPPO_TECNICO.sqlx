@@ -1,0 +1,10 @@
+config {
+  type: "view",
+  schema: "DWHVIEWS",
+  name: "GRUPPO_TECNICO",
+  tags: ["views"]
+}
+
+   SELECT DWNI_GRUPPO_TECNICO_COD AS COD_GRUPPO_TECNICO, 
+    DWNI_GRUPPO_TECNICO_DES AS DES_GRUPPO_TECNICO
+    FROM  ${ref("TDWNI_GRUPPO_TECNICO_ANG")}  NI

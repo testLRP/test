@@ -1,0 +1,24 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_FATT_CAMBIO",
+  tags: ["scontrini"],
+  description:"In questa tabella viene calcolato il fattore di cambio ",
+  columns: {
+    DWDB_CAMBIO_ANNOMESE:"Data di validazione fattore di cambio",
+    DWDB_FATT_CAMB_VAL:"Valore numerico del fattore di cambio, arrontondato alla ottava cifra significativa",
+    DWDI_VALUTA_COD:"Codice identificativo della valuta",
+    NUMBER_ROW:""
+  }
+}
+
+SELECT DISTINCT
+  ROW_NUMBER() OVER (PARTITION BY DWDI_VALUTA_COD,CAST(FORMAT_DATE("%Y-%m",DWDB_CAMBIO_DTA) AS STRING) ) AS NUMBER_ROW,
+   DWDI_VALUTA_COD AS DWDI_VALUTA_COD,
+   CAST(FORMAT_DATE("%Y-%m",DWDB_CAMBIO_DTA) AS STRING) DWDB_CAMBIO_ANNOMESE,
+   ROUND(CASE WHEN DWDB_FATT_CAMB_VAL>0 THEN 1/DWDB_FATT_CAMB_VAL ELSE 0 END,8) DWDB_FATT_CAMB_VAL
+FROM 
+${PARTITION.ref(ref("TDWDB_CAMBI_GG_ANG"), "ANG")}
+
+
+

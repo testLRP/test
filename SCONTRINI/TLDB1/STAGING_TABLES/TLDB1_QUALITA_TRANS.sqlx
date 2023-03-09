@@ -1,0 +1,23 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_QUALITA_TRANS",
+  tags: ["scontrini"],
+  description:"",
+  columns: {
+    DWZ4_CHIAVE1_COD:"",
+    DWZ4_FLUSSO_COD:"",
+    DWZ4_QUALITA_COD:"",
+    DWZ4_VALORE1_COD:""
+  }
+}
+
+SELECT
+  DWZ4_FLUSSO_COD,
+  DWZ4_CHIAVE1_COD,
+  DWZ4_VALORE1_COD,
+  DWZ4_QUALITA_COD,
+FROM
+  ${PARTITION.ref(ref("TDWZ4_DEDUP_QUALITA_ANG"), "ANG")} TDWZ4
+WHERE
+  DWZ4_FLUSSO_COD = "STATO_FISICO-QUALITA"

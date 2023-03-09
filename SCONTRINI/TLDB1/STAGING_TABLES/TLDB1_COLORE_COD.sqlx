@@ -1,0 +1,26 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_COLORE_COD",
+  tags: ["scontrini"],
+  description:"",
+ columns: {
+    ID_SCN: "",
+    ID_RGH: "",
+    COLORE_COD: "",
+  }
+}
+
+SELECT
+  ID_SCN,
+  ID_RGH,
+  CASE
+    WHEN CAU_RSO_RGH_COD = 'SPE'
+    OR CAU_RSO_RGH_COD = 'ACR'
+    OR CAU_RSO_RGH_COD = 'ACU'
+    OR CAU_RSO_RGH_COD = 'BUR'
+    OR CAU_RSO_RGH_COD = 'BUU' THEN '-'
+    ELSE EDDA_COLORE_COD
+  END AS COLORE_COD
+FROM
+  ${ref("TLDB1_INPUT")}

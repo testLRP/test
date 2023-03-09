@@ -1,0 +1,16 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_LISTINO_RTL",
+  tags: ["scontrini"],
+  description:"",
+  columns: {
+    DWD4_ARTICOLO_COD:"",
+    DWMA_STA_FCO_COD:"",
+    DWNA_ORIG_ITA_LOC_VAL:""
+  }
+}
+
+SELECT DWD4_ARTICOLO_COD, DWMA_STA_FCO_COD,  DWNA_ORIG_LOC_VAL AS DWNA_ORIG_ITA_LOC_VAL
+FROM ${PARTITION.ref(ref("TDWNA_LISTINO_RETAIL_ANG"), "ANG")}
+WHERE DWD1_NEGZ_COD='IT05'

@@ -1,0 +1,23 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_ANNO_STA_CLZ",
+  tags: ["scontrini"],
+  description:"",
+  columns: {
+  DWDE_VND_ANNO_COD:"Anno di vendita",
+  DWDE_VND_CLZ_COD:"Codice identificativo della collezione d'abbigliamento",
+  DWDE_VND_STAG_COD:"Codice identificativo delle stagioni alle quali le collezioni apartengono: I come invernale ed E come estiva. Nel caso in cui la collezione non sia identificata viene identificata col carattere speciale trattino "-""
+  }
+}
+
+${ANNO_STAG_CLZ.get_anno_stag_clz(
+    ref("TLDB1_INPUT"),
+    PARTITION.ref(ref("TDWDC_ARTICOLI_COLORE_ANG"), "ANG"),
+    PARTITION.ref(ref("TDWDE_TABSTACLZ_ANG"), "ANG"),
+    PARTITION.ref(ref("TDWDD_TABSTA_ANG"), "ANG"),
+    "ARTICOLO_COD",
+    "EDDA_COLORE_COD",
+    "EMISSIONE_DTA",
+    ["ID_SCN", "ID_RGH"]
+  )}

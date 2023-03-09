@@ -1,0 +1,10 @@
+config {
+  type: "view",
+  schema: "DWHVIEWS",
+  name: "SHAPE",
+  tags: ["views"]
+}
+
+SELECT DWX1_SHAPE_COD AS COD_SHAPE,
+       DWX1_SHAPE_DES  AS DES_SHAPE  
+FROM  ${ref("TDWX1_SHAPE_ANG")}  X1

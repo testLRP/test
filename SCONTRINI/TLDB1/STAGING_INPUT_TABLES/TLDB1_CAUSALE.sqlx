@@ -1,0 +1,38 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_CAUSALE",
+  tags: ["scontrini"],
+  description: "Tabella preparatoria per la TLDB1_INPUT. Qui calcoliamo il valore della causale ",
+  columns: {
+    ID_SCN: "",
+    ID_RGH: "",
+    CAUSALE: ""
+  },
+  assertions: {}
+}
+
+SELECT
+  VBRP_WERKS || '-' || COALESCE(VBRK_ZZPOSTILL, "0") || '-' || VBRK_ZZPOSTRANS ID_SCN,
+  VBRP_POSNR ID_RGH,
+  CASE
+    WHEN VBRP_PSTYV = 'DLN'
+    OR VBRP_PSTYV = 'ZCON'
+    OR VBRP_PSTYV = 'ZRES' THEN 'VEN'
+    WHEN VBRP_PSTYV = 'ZPAD' THEN 'ACR'
+    WHEN VBRP_PSTYV = 'ZSTC' THEN 'BUR'
+    WHEN VBRP_PSTYV = 'ZSCR'
+    AND CAST(VBRP_EAN11 AS STRING) IN('99900000000099', '99900000000091') THEN 'ACU'
+    WHEN VBRP_PSTYV = 'ZSCR'
+    AND CAST(VBRP_EAN11 AS STRING) NOT IN('99900000000099', '99900000000091') THEN 'BUU'
+    WHEN VBRP_PSTYV IN('ZSPE', 'ZRSP') THEN 'SPE'
+    WHEN VBRP_PSTYV IN('ZSRE', 'ZOMV') THEN 'RES'
+    WHEN VBRP_PSTYV = 'ZOMA' THEN 'OMA'
+    WHEN VBRP_PSTYV = 'ZVOI' THEN 'ANN'
+  END AS CAUSALE
+FROM
+  ${PARTITION.ref(ref("VBRK_SAL"), "SAL")},
+  ${PARTITION.ref(ref("VBRP_SAL"), "SAL")}
+WHERE
+  (VBRP_WERKS || VBRK_ZZPOSTILL || VBRK_ZZPOSTRANS) IS NOT NULL
+  AND VBRK_VBELN = VBRP_VBELN

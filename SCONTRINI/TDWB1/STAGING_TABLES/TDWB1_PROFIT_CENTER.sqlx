@@ -1,0 +1,26 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TDWB1_PROFIT_CENTER",
+  tags: ["scontrini"],
+  description: "",
+  columns: {
+    DWA2_DATA_A_DTA: "",
+    DWA2_DATA_DA_DTA: "",
+    DWA2_PROFIT_CENTER_COD: "",
+    DWA2_PROFIT_CENTER_HFM_COD: "",
+    DWD1_NEGZ_COD: "",
+    DWF1_STATO_COD: ""
+  }
+
+}
+
+SELECT
+  DWD1_NEGZ_COD,
+  DWF1_STATO_COD,
+  DWA2_DATA_DA_DTA,
+  DWA2_DATA_A_DTA,
+  DWA2_PROFIT_CENTER_COD,
+  DWA2_PROFIT_CENTER_HFM_COD
+FROM
+  ${PARTITION.ref(ref("TDWCF_PC_HFM_ANG"), "ANG")} 

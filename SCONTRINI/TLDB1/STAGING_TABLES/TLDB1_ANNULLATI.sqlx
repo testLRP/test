@@ -1,0 +1,29 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_ANNULLATI",
+  tags: ["scontrini"],
+  description:"Questa tabella associa ad ogni scontrino annullato il codice scontrino dello scontrino annullante",
+  columns: {
+    ID_RGH_COD_ANNULLANTE:"Numero di riga dello scontrino annullante",
+    ID_SCN_COD_ANNULLANTE:"Codice identificativo dello scontrino annullante",
+    ID_SCN_COD_ANNULLATO:"Codice identificativo dello scontrino annullato"
+  }
+}
+
+SELECT DISTINCT
+    concat(VBRP_WERKS, '-', coalesce(coalesce(VBRK_ZZPOSORTI, VBRK_ZZPOSTILL), "0"), '-', VBRK_ZZPOSTRAPS) AS ID_SCN_COD_ANNULLATO,
+    concat(VBRP_WERKS, '-', coalesce(VBRK_ZZPOSTILL, "0"), '-', VBRK_ZZPOSTRANS) AS ID_SCN_COD_ANNULLANTE,
+    CAST(VBRP_POSNR as BIGNUMERIC) AS ID_RGH_COD_ANNULLANTE
+  FROM
+    ${PARTITION.ref(ref("VBRK_SAL"), "SAL")},
+    ${PARTITION.ref(ref("VBRP_SAL"), "SAL")}
+  WHERE VBRK_VBELN = VBRP_VBELN
+   AND VBRP_PSTYV = 'ZVOI'
+   AND VBRP_WERKS IN(
+    SELECT
+        TDWD1_ANAG_NEGZ_ANG.DWD1_NEGZ_COD
+      FROM
+        ${PARTITION.ref(ref("TDWD1_ANAG_NEGZ_ANG"), "ANG")} TDWD1_ANAG_NEGZ_ANG
+      WHERE TDWD1_ANAG_NEGZ_ANG.DWD1_SORGENTE_DATI_COD = 'CINA'
+  )

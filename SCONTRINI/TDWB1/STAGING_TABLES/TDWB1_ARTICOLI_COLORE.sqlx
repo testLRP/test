@@ -1,0 +1,28 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TDWB1_ARTICOLI_COLORE",
+  tags: ["scontrini"],
+  description: "",
+  columns: {
+    COD_ANN: "",
+    COD_CLRE: "",
+    COD_CLZ: "",
+    COD_OGG: "",
+    COD_STAG: "",
+    LOGICA_ACQ_COD: "",
+    SALE_COD: ""
+  }
+
+}
+
+SELECT
+  DWDE_VND_ANNO_COD COD_ANN,
+  DWDE_VND_STAG_COD COD_STAG,
+  DWDE_VND_CLZ_COD COD_CLZ,
+  DWD4_ARTICOLO_COD COD_OGG,
+  DWM9_COLORE_COD COD_CLRE,
+  DWMF_LOGICA_ACQ_COD LOGICA_ACQ_COD,
+  DWMI_SALE_COD SALE_COD
+FROM
+  ${PARTITION.ref(ref("TDWDC_ARTICOLI_COLORE_ANG"), "ANG")}

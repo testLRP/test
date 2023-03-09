@@ -1,0 +1,25 @@
+config {
+  type: "assertion",
+  tags: ["scontrini"]
+}
+
+SELECT
+  LDB1_ID_SCN_COD,
+  FAILING_ROW_CONDITION,
+  NUMERO_ERRORI
+FROM
+  (
+    SELECT
+      'LDB1_TIPO_SCN_COD IS NOT NULL' AS FAILING_ROW_CONDITION,
+      COUNT(LDB1_ID_SCN_COD) OVER (partition by LDB1_ID_SCN_COD) as NUMERO_ERRORI,
+      LDB1_ID_SCN_COD
+    FROM
+      ${ref("TLDB1_TRANS_SAL")}
+    WHERE
+      NOT (LDB1_TIPO_SCN_COD IS NOT NULL)
+  )
+WHERE
+  (NUMERO_ERRORI / ( SELECT
+    COUNT(*)
+  FROM
+    ${ref("TLDB1_TRANS_SAL")})) * 100 > 5

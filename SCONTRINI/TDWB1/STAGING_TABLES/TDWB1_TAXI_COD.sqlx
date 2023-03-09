@@ -1,0 +1,21 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TDWB1_TAXI_COD",
+  tags: ["scontrini"],
+  description: "",
+  columns: {
+    DWD1_NEGZ_COD: "",
+    DWD1_STRUT_COMM_COD: "",
+    DWDZ_NEGZ_DWH_COD: ""
+  }
+
+}
+
+SELECT
+  D1.DWD1_NEGZ_COD,
+  D1.DWD1_STRUT_COMM_COD,
+  DZ.DWDZ_NEGZ_DWH_COD
+FROM
+  ${PARTITION.ref(ref("TDWD1_ANAG_NEGZ_ANG"), "ANG")} D1
+  INNER JOIN ${PARTITION.ref(ref("TDWDZ_DEDUP_NEGZ_ANG"), "ANG")} DZ on D1.DWD1_NEGZ_COD = DZ.DWD1_NEGZ_TAXI_COD

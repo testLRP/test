@@ -1,0 +1,17 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_SU_MISURA",
+  tags: ["scontrini"],
+  description: "",
+  columns: {
+    DWD4_ARTICOLO_COD: ""
+  }
+}
+
+SELECT
+  DWD4_ARTICOLO_COD
+FROM
+  ${ref("TDWD4_ARTICOLI_ANG")}
+WHERE
+  DWMB_SU_MISURA_COD IN('1', '2')

@@ -1,0 +1,29 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TLDB1_VALUTA_KONV",
+  tags: ["scontrini"],
+  description:"",
+  columns: {
+    KONV_KBETR:"",
+    KONV_KNUMV:"",
+    KONV_KPOSN:"",
+    KONV_KSCHL:"",
+    KONV_KWERT:"",
+    KONV_MWSK1:"",
+    KONV_WAERS:""
+  }
+}
+
+SELECT
+  KONV_KNUMV,
+  KONV_KPOSN,
+  KONV_WAERS,
+  KONV_MWSK1,
+  KONV_KBETR,
+  KONV_KSCHL,
+  KONV_KWERT * -1 AS KONV_KWERT
+FROM
+  ${PARTITION.ref(ref("KONV_SAL"), "SAL")} KONV_SAL
+WHERE
+  KONV_KSCHL IN('ZARR', 'ZART')

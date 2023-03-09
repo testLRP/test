@@ -1,0 +1,10 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "SHARED_KONP_ANG",
+  tags: ["NA","NM","NF","ANAG","PRICE_LIST"],
+}
+
+SELECT * FROM ${PARTITION.ref(ref("KONP_SO_ANG"), "ANG")}
+UNION DISTINCT
+SELECT * FROM ${PARTITION.ref(ref("KONP_SI_ANG"), "ANG")}

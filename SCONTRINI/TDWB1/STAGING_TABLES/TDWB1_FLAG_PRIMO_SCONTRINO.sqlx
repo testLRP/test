@@ -1,0 +1,20 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TDWB1_FLAG_PRIMO_SCONTRINO",
+  tags: ["scontrini"],
+  description: "",
+  columns: {
+    ID_SCN: "",
+    FLAG: "",
+    FLAG_ID_SCN_COD: ""
+  }
+}
+
+SELECT
+  min(LDB1_ID_RGH_COD) AS FLAG,
+  LDB1_ID_SCN_COD AS FLAG_ID_SCN_COD
+FROM
+  ${ref("TLDB1_TRANS_SAL")}
+GROUP BY
+  LDB1_ID_SCN_COD
