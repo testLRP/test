@@ -1,0 +1,11 @@
+config {
+  type: "table",
+  schema: "DWHDF",
+  name: "TEST",
+  tags: ["scontrini"],
+  description: "Questa tabella organizza i dati dalle interfacce e prepara i dati per le trasformazioni future",
+  assertions: {
+    uniqueKey: ["ID_SCN", "ID_RGH"]
+  }
+}
+--FEATURE A
